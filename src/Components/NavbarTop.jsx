@@ -35,10 +35,10 @@ export default function NavbarTop() {
     },
   ];
 
-  //   const search = (event: React.FormEvent<HTMLFormElement>) => {
-  //     event.preventDefault();
-  //     alert(`Successfully found 10 results for ${inputValue}`);
-  //   };
+  const search = (event) => {
+    event.preventDefault();
+    alert(`Successfully found 10 results for ${inputValue}`);
+  };
 
   return (
     <header className="flex justify-center w-full py-2 px-4 lg:py-5 lg:px-6 text-white border-0 bg-primary-700">
@@ -90,6 +90,7 @@ export default function NavbarTop() {
         <form
           role="search"
           className="hidden md:flex flex-[100%] order-last lg:order-3 mt-2 lg:mt-0 pb-2 lg:pb-0"
+          onSubmit={search}
         >
           <SfInput
             value={inputValue}

@@ -18,7 +18,7 @@ function App() {
     getProducts();
     console.log("inside array");
   }, []);
-  console.log(products);
+  // console.log(products);
 
   return (
     <>
@@ -36,7 +36,7 @@ function App() {
         }}
       >
         <ProductCard />
-        <ProductCard />
+        {/*<ProductCard /> */}
       </div>
     </>
   );

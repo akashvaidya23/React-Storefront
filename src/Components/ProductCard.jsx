@@ -15,20 +15,32 @@ import {
   SfIconShoppingCartCheckout,
 } from "@storefront-ui/react";
 import { useCounter } from "react-use";
-import { useId } from "react";
+import { useEffect, useId } from "react";
 import { clamp } from "@storefront-ui/shared";
 
 export default function ProductDetails(product) {
-  console.log("Product ", product);
+  // console.log("Product ", product);
   const inputId = useId();
-  const min = 1;
+  const min = 0;
   const max = 999;
   const [value, { inc, dec, set }] = useCounter(min);
   function handleOnChange(event) {
     const { value: currentValue } = event.target;
     const nextValue = parseFloat(currentValue);
+    console.log("nextValue ", nextValue);
     set(Number(clamp(nextValue, min, max)));
   }
+
+  const cart = [];
+  function addToCart(product_id) {
+    // console.log("value", value, product_id);
+    let lineItem = {};
+    lineItem.qunatity = value;
+    lineItem.product_id = product_id;
+    cart.push(lineItem);
+    console.log(cart);
+  }
+
   return (
     <section
       className="md:max-w-[640px]"
@@ -115,6 +127,7 @@ export default function ProductDetails(product) {
           <SfButton
             size="lg"
             className="w-full xs:ml-4"
+            onClick={() => addToCart(product.product.id)}
             slotPrefix={<SfIconShoppingCart size="sm" />}
           >
             Add to cart

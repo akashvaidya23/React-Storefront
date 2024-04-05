@@ -18,7 +18,8 @@ import { useCounter } from "react-use";
 import { useId } from "react";
 import { clamp } from "@storefront-ui/shared";
 
-export default function ProductDetails() {
+export default function ProductDetails(product) {
+  console.log("Product ", product);
   const inputId = useId();
   const min = 1;
   const max = 999;
@@ -29,16 +30,27 @@ export default function ProductDetails() {
     set(Number(clamp(nextValue, min, max)));
   }
   return (
-    <section className="md:max-w-[640px]">
+    <section
+      className="md:max-w-[640px]"
+      style={{ border: "1px solid black", padding: "5px" }}
+    >
       <div className="inline-flex items-center justify-center text-sm font-medium text-white bg-secondary-600 py-1.5 px-3 mb-4">
         <SfIconSell size="sm" className="mr-1.5" />
         Sale
       </div>
+      <div>
+        <img
+          src={product.product.thumbnail}
+          alt="img"
+          width="300px"
+          height="150px"
+        />
+      </div>
       <h1 className="mb-1 font-bold typography-headline-4">
-        Mini Foldable Drone with HD Camera FPV Wifi RC Quadcopter
+        {product.product.title}
       </h1>
       <strong className="block font-bold typography-headline-3">
-        $2,345.99
+        {"$" + product.product.price}
       </strong>
       <div className="inline-flex items-center mt-4 mb-2">
         <SfRating size="xs" value={3} max={5} />
@@ -53,16 +65,9 @@ export default function ProductDetails() {
           123 reviews
         </SfLink>
       </div>
-      <ul className="mb-4 font-normal typography-text-sm">
-        <li>HD Pictures & Videos and FPV Function</li>
-        <li>Intelligent Voice Control</li>
-        <li>Multiple Fun Flights</li>
-        <li>Easy to Use</li>
-        <li>Foldable Design & Double Flight Time</li>
-      </ul>
       <div className="py-4 mb-4 border-gray-200 border-y">
         <div className="bg-primary-100 text-primary-700 flex justify-center gap-1.5 py-1.5 typography-text-sm items-center mb-4 rounded-md">
-          <SfIconShoppingCartCheckout />1 in cart
+          <SfIconShoppingCartCheckout />0 in cart
         </div>
         <div className="items-start xs:flex">
           <div className="flex flex-col items-stretch xs:items-center xs:inline-flex">
@@ -101,7 +106,10 @@ export default function ProductDetails() {
               </SfButton>
             </div>
             <p className="self-center mt-1 mb-4 text-xs text-neutral-500 xs:mb-0">
-              <strong className="text-neutral-900">{max}</strong> in stock
+              <strong className="text-neutral-900">
+                {product.product.stock}
+              </strong>{" "}
+              in stock
             </p>
           </div>
           <SfButton
@@ -128,43 +136,6 @@ export default function ProductDetails() {
             Add to list
           </SfButton>
         </div>
-      </div>
-      <div className="flex first:mt-4">
-        <SfIconPackage
-          size="sm"
-          className="flex-shrink-0 mr-1 text-neutral-500"
-        />
-        <p className="text-sm">
-          Free shipping, arrives by Thu, Apr 7. Want it faster?
-          <SfLink href="#" variant="secondary" className="mx-1">
-            Add an address
-          </SfLink>
-          to see options
-        </p>
-      </div>
-      <div className="flex mt-4">
-        <SfIconWarehouse
-          size="sm"
-          className="flex-shrink-0 mr-1 text-neutral-500"
-        />
-        <p className="text-sm">
-          Pickup not available at your shop.
-          <SfLink href="#" variant="secondary" className="ml-1">
-            Check availability nearby
-          </SfLink>
-        </p>
-      </div>
-      <div className="flex mt-4">
-        <SfIconSafetyCheck
-          size="sm"
-          className="flex-shrink-0 mr-1 text-neutral-500"
-        />
-        <p className="text-sm">
-          Free 30-days returns.
-          <SfLink href="#" variant="secondary" className="ml-1">
-            Details
-          </SfLink>
-        </p>
       </div>
     </section>
   );

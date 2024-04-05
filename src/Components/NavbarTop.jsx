@@ -456,14 +456,15 @@ export default function NavbarTop() {
               className="flex shrink-0 w-8 h-8 lg:w-[12.5rem] lg:h-[1.75rem] items-center text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
             >
               <picture>
-                <source
+                {/* <source
                   srcSet="https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/vsf_logo_white.svg"
                   media="(min-width: 1024px)"
                 />
                 <img
                   src="https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/vsf_logo_sign_white.svg"
                   alt="Sf Logo"
-                />
+                /> */}
+                <p style={{ fontSize: "30px" }}>AP Store</p>
               </picture>
             </a>
           </div>

@@ -26,12 +26,12 @@ export default function ProductDetails(product) {
   const inputId = useId();
   const min = 0;
   const max = 999;
-  console.log(product.product.cartQuantity);
+  // console.log(product.product.cartQuantity);
   const [value, { inc, dec, set }] = useCounter(product.product.cartQuantity);
   function handleOnChange(event) {
     const { value: currentValue } = event.target;
     const nextValue = parseFloat(currentValue);
-    console.log("nextValue ", nextValue);
+    // console.log("nextValue ", nextValue);
     set(Number(clamp(nextValue, min, max)));
   }
 

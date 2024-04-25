@@ -15,6 +15,7 @@ import {
   useDisclosure,
   SfInput,
   SfIconSearch,
+  SfBadge,
 } from "@storefront-ui/react";
 import {
   FocusEvent,
@@ -25,20 +26,9 @@ import {
   createRef,
   RefObject,
 } from "react";
+import { useSelector } from "react-redux";
 
 const actionItems = [
-  {
-    icon: <SfIconShoppingCart />,
-    label: "",
-    ariaLabel: "Cart",
-    role: "button",
-  },
-  {
-    icon: <SfIconFavorite />,
-    label: "",
-    ariaLabel: "Wishlist",
-    role: "button",
-  },
   {
     icon: <SfIconPerson />,
     label: "Log in",
@@ -379,6 +369,9 @@ export default function NavbarTop() {
   const [activeNode, setActiveNode] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
+  const count = useSelector((state) => state.cart.value);
+  const productCount = count.length;
+  console.log("count ", productCount);
   const refsByKey = useMemo(() => {
     const buttonRefs = {};
     content.children?.forEach((item) => {
@@ -497,11 +490,19 @@ export default function NavbarTop() {
             />
           </form>
           <nav className="flex flex-nowrap justify-end items-center md:ml-10 gap-x-1">
+            <SfButton
+              className="relative text-white bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
+              square
+              variant="tertiary"
+            >
+              <SfIconShoppingCart />
+              <SfBadge content={productCount} />
+            </SfButton>
+
             {actionItems.map((actionItem) => (
               <SfButton
                 className="text-white bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
                 key={actionItem.ariaLabel}
-                aria-label={actionItem.ariaLabel}
                 variant="tertiary"
                 slotPrefix={actionItem.icon}
                 square

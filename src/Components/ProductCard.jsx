@@ -16,16 +16,18 @@ import {
   useScrollable,
 } from "@storefront-ui/react";
 import { useCounter } from "react-use";
-import { useEffect, useId, useState } from "react";
+import { useId } from "react";
 import { clamp } from "@storefront-ui/shared";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
 
 export default function ProductDetails(product) {
+  // console.log(cartProducts);
   const inputId = useId();
   const min = 0;
   const max = 999;
-  const [value, { inc, dec, set }] = useCounter(min);
+  console.log(product.product.cartQuantity);
+  const [value, { inc, dec, set }] = useCounter(product.product.cartQuantity);
   function handleOnChange(event) {
     const { value: currentValue } = event.target;
     const nextValue = parseFloat(currentValue);
@@ -40,7 +42,7 @@ export default function ProductDetails(product) {
     // console.log("obj ", obj);
     dispatch(addToCart(obj));
   };
-  // console.log(cart);
+  console.log(product.product.cartQuantity);
 
   return (
     <section
@@ -130,7 +132,7 @@ export default function ProductDetails(product) {
             size="lg"
             className="w-full xs:ml-4"
             onClick={() =>
-              addToCart1({ qunatity: value, product: product.product.stock })
+              addToCart1({ quantity: value, product: product.product.id })
             }
             slotPrefix={<SfIconShoppingCart size="sm" />}
           >

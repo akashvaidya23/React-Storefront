@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import NavbarTop from "./Components/NavbarTop";
 import ProductCard from "./Components/ProductCard";
+import { useSelector } from "react-redux";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -18,6 +19,22 @@ function App() {
     getProducts();
     // console.log("inside array");
   }, []);
+
+  const cartProducts = useSelector((state) => state.cart.value);
+  // console.log("cartProducts ", cartProducts);
+
+  products.map((product) => {
+    for (let cart of cartProducts) {
+      // console.log(cart.product + "===" + product.id);
+      if (cart.product === product.id) {
+        product.cartQuantity = cart.quantity;
+        break;
+      } else {
+        product.cartQuantity = 0;
+      }
+    }
+  });
+
   // console.log(products);
 
   return (
@@ -33,7 +50,13 @@ function App() {
         }}
       >
         {products.map((product) => {
-          return <ProductCard key={product.id} product={product} />;
+          return (
+            <ProductCard
+              key={product.id}
+              product={product}
+              cartProducts={cartProducts}
+            />
+          );
           // return <p key={product.id}>{product.title}</p>;
         })}
       </div>

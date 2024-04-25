@@ -13,13 +13,15 @@ import {
   SfIconWarehouse,
   SfIconSafetyCheck,
   SfIconShoppingCartCheckout,
+  useScrollable,
 } from "@storefront-ui/react";
 import { useCounter } from "react-use";
-import { useEffect, useId } from "react";
+import { useEffect, useId, useState } from "react";
 import { clamp } from "@storefront-ui/shared";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../features/cart/cartSlice";
 
 export default function ProductDetails(product) {
-  // console.log("Product ", product);
   const inputId = useId();
   const min = 0;
   const max = 999;
@@ -31,15 +33,14 @@ export default function ProductDetails(product) {
     set(Number(clamp(nextValue, min, max)));
   }
 
-  const cart = [];
-  function addToCart(product_id) {
-    // console.log("value", value, product_id);
-    let lineItem = {};
-    lineItem.qunatity = value;
-    lineItem.product_id = product_id;
-    cart.push(lineItem);
-    console.log(cart);
-  }
+  const dispatch = useDispatch();
+
+  // const [cart, setCart] = useState([]);
+  const addToCart1 = (obj) => {
+    // console.log("obj ", obj);
+    dispatch(addToCart(obj));
+  };
+  // console.log(cart);
 
   return (
     <section
@@ -56,6 +57,7 @@ export default function ProductDetails(product) {
           alt="img"
           width="300px"
           height="150px"
+          style={{ height: "200px" }}
         />
       </div>
       <h1 className="mb-1 font-bold typography-headline-4">
@@ -127,7 +129,9 @@ export default function ProductDetails(product) {
           <SfButton
             size="lg"
             className="w-full xs:ml-4"
-            onClick={() => addToCart(product.product.id)}
+            onClick={() =>
+              addToCart1({ qunatity: value, product: product.product.stock })
+            }
             slotPrefix={<SfIconShoppingCart size="sm" />}
           >
             Add to cart

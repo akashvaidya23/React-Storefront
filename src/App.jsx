@@ -16,7 +16,7 @@ function App() {
   };
   useEffect(() => {
     getProducts();
-    console.log("inside array");
+    // console.log("inside array");
   }, []);
   // console.log(products);
 

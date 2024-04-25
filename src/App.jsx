@@ -7,12 +7,14 @@ import { useSelector } from "react-redux";
 function App() {
   // const [count, setCount] = useState(0);
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const getProducts = async () => {
     await fetch("https://dummyjson.com/products")
       .then((res) => res.json())
       .then((data) => {
         // console.log(data.products);
         setProducts(data.products);
+        setLoading(false);
       });
   };
   useEffect(() => {
@@ -35,11 +37,12 @@ function App() {
     }
   });
 
-  // console.log(products);
-
   return (
     <>
       <NavbarTop />
+      {loading && (
+        <p style={{ textAlign: "center", margin: "auto" }}>Please wait ...</p>
+      )}
       <div
         style={{
           display: "flex",

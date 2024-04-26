@@ -26,6 +26,9 @@ function App() {
   console.log("cartProducts ", cartProducts);
 
   products.map((product) => {
+    if (cartProducts.length == 0) {
+      product.cartQuantity = 0;
+    }
     for (let cart of cartProducts) {
       if (cart.product === product.id) {
         product.cartQuantity = cart.quantity;

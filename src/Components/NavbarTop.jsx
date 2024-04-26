@@ -371,7 +371,7 @@ export default function NavbarTop() {
 
   const count = useSelector((state) => state.cart.value);
   const productCount = count.length;
-  console.log("count ", productCount);
+  // console.log("count ", productCount);
   const refsByKey = useMemo(() => {
     const buttonRefs = {};
     content.children?.forEach((item) => {

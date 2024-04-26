@@ -16,7 +16,7 @@ import {
   useScrollable,
 } from "@storefront-ui/react";
 import { useCounter } from "react-use";
-import { useId } from "react";
+import { useId, useState } from "react";
 import { clamp } from "@storefront-ui/shared";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
@@ -37,18 +37,30 @@ export default function ProductDetails(product) {
 
   const dispatch = useDispatch();
 
-  // const [cart, setCart] = useState([]);
+  const [cartAdded, setCartAdded] = useState(false);
   const addToCart1 = (obj) => {
-    // console.log("obj ", obj);
+    setCartAdded(true);
     dispatch(addToCart(obj));
   };
-  console.log(product.product.cartQuantity);
 
+  // console.log(product.product.cartQuantity);
+
+  const decrement = (obj) => {
+    dec();
+    dispatch(addToCart(obj));
+    // console.log(obj.quantity);
+    if (obj.quantity === 0) {
+      setCartAdded(false);
+    }
+  };
+
+  const increment = (obj) => {
+    inc();
+    dispatch(addToCart(obj));
+  };
+  console.log(cartAdded, product.product.cartQuantity);
   return (
-    <section
-      className="md:max-w-[640px]"
-      style={{ border: "1px solid black", padding: "5px" }}
-    >
+    <section className="md:max-w-[640px]" style={{ padding: "5px" }}>
       <div className="inline-flex items-center justify-center text-sm font-medium text-white bg-secondary-600 py-1.5 px-3 mb-4">
         <SfIconSell size="sm" className="mr-1.5" />
         Sale
@@ -83,44 +95,69 @@ export default function ProductDetails(product) {
       </div>
       <div className="py-4 mb-4 border-gray-200 border-y">
         <div className="bg-primary-100 text-primary-700 flex justify-center gap-1.5 py-1.5 typography-text-sm items-center mb-4 rounded-md">
-          <SfIconShoppingCartCheckout />0 in cart
+          <SfIconShoppingCartCheckout />
+          {product.product.cartQuantity} in cart
         </div>
         <div className="items-start xs:flex">
           <div className="flex flex-col items-stretch xs:items-center xs:inline-flex">
-            <div className="flex border border-neutral-300 rounded-md">
+            {cartAdded || product.product.cartQuantity > 0 ? (
+              <div className="flex border border-neutral-300 rounded-md">
+                <SfButton
+                  variant="tertiary"
+                  square
+                  className="rounded-r-none p-3"
+                  disabled={value <= min}
+                  aria-controls={inputId}
+                  aria-label="Decrease value"
+                  onClick={() =>
+                    decrement({
+                      quantity: value - 1,
+                      product: product.product.id,
+                    })
+                  }
+                >
+                  <SfIconRemove />
+                </SfButton>
+                <input
+                  id={inputId}
+                  type="number"
+                  role="spinbutton"
+                  className="grow appearance-none mx-2 w-8 text-center bg-transparent font-medium [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:display-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:display-none [&::-webkit-outer-spin-button]:m-0 [-moz-appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none disabled:placeholder-disabled-900 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+                  min={min}
+                  max={max}
+                  value={value}
+                  onChange={handleOnChange}
+                />
+                <SfButton
+                  variant="tertiary"
+                  square
+                  className="rounded-l-none p-3"
+                  disabled={value >= max}
+                  aria-controls={inputId}
+                  aria-label="Increase value"
+                  onClick={() =>
+                    increment({
+                      quantity: value + 1,
+                      product: product.product.id,
+                    })
+                  }
+                >
+                  <SfIconAdd />
+                </SfButton>
+              </div>
+            ) : (
               <SfButton
-                variant="tertiary"
-                square
-                className="rounded-r-none p-3"
-                disabled={value <= min}
-                aria-controls={inputId}
-                aria-label="Decrease value"
-                onClick={() => dec()}
+                size="lg"
+                className="w-full xs:ml-8"
+                onClick={() =>
+                  addToCart1({ quantity: value, product: product.product.id })
+                }
+                slotPrefix={<SfIconShoppingCart size="sm" />}
               >
-                <SfIconRemove />
+                Add to cart
               </SfButton>
-              <input
-                id={inputId}
-                type="number"
-                role="spinbutton"
-                className="grow appearance-none mx-2 w-8 text-center bg-transparent font-medium [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:display-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:display-none [&::-webkit-outer-spin-button]:m-0 [-moz-appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none disabled:placeholder-disabled-900 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
-                min={min}
-                max={max}
-                value={value}
-                onChange={handleOnChange}
-              />
-              <SfButton
-                variant="tertiary"
-                square
-                className="rounded-l-none p-3"
-                disabled={value >= max}
-                aria-controls={inputId}
-                aria-label="Increase value"
-                onClick={() => inc()}
-              >
-                <SfIconAdd />
-              </SfButton>
-            </div>
+            )}
+
             <p className="self-center mt-1 mb-4 text-xs text-neutral-500 xs:mb-0">
               <strong className="text-neutral-900">
                 {product.product.stock}
@@ -128,16 +165,6 @@ export default function ProductDetails(product) {
               in stock
             </p>
           </div>
-          <SfButton
-            size="lg"
-            className="w-full xs:ml-4"
-            onClick={() =>
-              addToCart1({ quantity: value, product: product.product.id })
-            }
-            slotPrefix={<SfIconShoppingCart size="sm" />}
-          >
-            Add to cart
-          </SfButton>
         </div>
         <div className="flex justify-center mt-4 gap-x-4">
           <SfButton

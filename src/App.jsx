@@ -23,11 +23,10 @@ function App() {
   }, []);
 
   const cartProducts = useSelector((state) => state.cart.value);
-  // console.log("cartProducts ", cartProducts);
+  console.log("cartProducts ", cartProducts);
 
   products.map((product) => {
     for (let cart of cartProducts) {
-      // console.log(cart.product + "===" + product.id);
       if (cart.product === product.id) {
         product.cartQuantity = cart.quantity;
         break;
@@ -48,8 +47,8 @@ function App() {
           display: "flex",
           flexFlow: "row",
           flexWrap: "wrap",
-          gap: "20px",
-          margin: "20px",
+          gap: "40px",
+          margin: "30px",
         }}
       >
         {products.map((product) => {

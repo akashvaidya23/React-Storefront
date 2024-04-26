@@ -9,8 +9,8 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      console.log("state", state.value);
-      console.log("in slice ", action.payload);
+      // console.log("state", state.value);
+      // console.log("in slice payload ", action.payload);
       let product_already = 0;
       let cart = [...state.value];
       let obj = action.payload;
@@ -24,8 +24,14 @@ export const cartSlice = createSlice({
       if (!product_already) {
         state.value.push(obj);
       }
+
+      if (obj.quantity == 0) {
+        const index = cart.findIndex((car) => car.product === obj.product);
+        // console.log(index);
+        state.value.splice(index, 1);
+      }
       //   state.value.push(action.payload);
-      console.log("state ", state.value);
+      // console.log("state ", state.value);
       localStorage.setItem("cartItems", JSON.stringify(state.value));
     },
   },

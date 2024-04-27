@@ -27,6 +27,7 @@ import {
   RefObject,
 } from "react";
 import { useSelector } from "react-redux";
+import { Link, Outlet } from "react-router-dom";
 
 const actionItems = [
   {
@@ -443,7 +444,8 @@ export default function NavbarTop() {
             >
               <SfIconMenu className="text-white" />
             </SfButton>
-            <a
+            <Link
+              to="/"
               href="#"
               aria-label="SF Homepage"
               className="flex shrink-0 w-8 h-8 lg:w-[12.5rem] lg:h-[1.75rem] items-center text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
@@ -459,7 +461,7 @@ export default function NavbarTop() {
                 /> */}
                 <p style={{ fontSize: "30px" }}>AP Store</p>
               </picture>
-            </a>
+            </Link>
           </div>
           <form
             role="search"
@@ -490,15 +492,16 @@ export default function NavbarTop() {
             />
           </form>
           <nav className="flex flex-nowrap justify-end items-center md:ml-10 gap-x-1">
-            <SfButton
-              className="relative text-white bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
-              square
-              variant="tertiary"
-            >
-              <SfIconShoppingCart />
-              <SfBadge content={productCount} />
-            </SfButton>
-
+            <Link to="/cart">
+              <SfButton
+                className="relative text-white bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
+                square
+                variant="tertiary"
+              >
+                <SfIconShoppingCart />
+                <SfBadge content={productCount} />
+              </SfButton>
+            </Link>
             {actionItems.map((actionItem) => (
               <SfButton
                 className="text-white bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
@@ -729,6 +732,7 @@ export default function NavbarTop() {
           </>
         )}
       </header>
+      <Outlet />
     </div>
   );
 }

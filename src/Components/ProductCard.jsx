@@ -21,7 +21,7 @@ import { clamp } from "@storefront-ui/shared";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
 
-export default function ProductDetails(product) {
+export default function ProductCart(product) {
   // console.log(cartProducts);
   const inputId = useId();
   const min = 0;
@@ -78,7 +78,7 @@ export default function ProductDetails(product) {
         {product.product.title}
       </h1>
       <strong className="block font-bold typography-headline-3">
-        {"$" + product.product.price}
+        {"₹ " + product.product.price + "/-"}
       </strong>
       <div className="inline-flex items-center mt-4 mb-2">
         <SfRating size="xs" value={3} max={5} />

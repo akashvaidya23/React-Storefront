@@ -4,12 +4,29 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./app/store.js";
+import NavbarTop from "./Components/NavbarTop.jsx";
+import CartDetails from "./Components/CartDetails.jsx";
+import HomePage from "./Components/HomePage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    // element: <div>Hello world!</div>,
+    element: <NavbarTop />,
+    children: [
+      {
+        path: "",
+        element: <HomePage />,
+      },
+      {
+        path: "cart",
+        element: <CartDetails />,
+      },
+    ],
   },
+  // {
+  //   path: "cart",
+  //   element: <CartDetails />,
+  // },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

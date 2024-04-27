@@ -18,7 +18,7 @@ import {
 import { useCounter } from "react-use";
 import { useId, useState } from "react";
 import { clamp } from "@storefront-ui/shared";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
 
 export default function ProductCart(product) {
@@ -36,8 +36,12 @@ export default function ProductCart(product) {
   }
 
   const dispatch = useDispatch();
-
-  const [cartAdded, setCartAdded] = useState(false);
+  const cartItems = useSelector((state) => state.cart.value);
+  let index = cartItems.findIndex((cartItem) => {
+    return cartItem.product == product.product.id;
+  });
+  console.log("Product id", product.product.id, index);
+  const [cartAdded, setCartAdded] = useState(index !== -1 ? true : false);
   const addToCart1 = (obj) => {
     setCartAdded(true);
     dispatch(addToCart(obj));
@@ -58,13 +62,16 @@ export default function ProductCart(product) {
     inc();
     dispatch(addToCart(obj));
   };
-  console.log(cartAdded, product.product.cartQuantity);
+  // console.log(cartAdded, product.product.cartQuantity);
   return (
     <section className="md:max-w-[640px]" style={{ padding: "5px" }}>
-      <div className="inline-flex items-center justify-center text-sm font-medium text-white bg-secondary-600 py-1.5 px-3 mb-4">
-        <SfIconSell size="sm" className="mr-1.5" />
-        Sale
-      </div>
+      {product.product.discountPercentage > 0 && (
+        <div className="inline-flex items-center justify-center text-sm font-medium text-white bg-secondary-600 py-1.5 px-3 mb-4">
+          <SfIconSell size="sm" className="mr-1.5" />
+          Sale
+        </div>
+      )}
+
       <div>
         <img
           src={product.product.thumbnail}
@@ -78,12 +85,17 @@ export default function ProductCart(product) {
         {product.product.title}
       </h1>
       <strong className="block font-bold typography-headline-3">
-        {"₹ " + product.product.price + "/-"}
+        {"₹ " +
+          product.product.price +
+          "/-" +
+          "( -" +
+          product.product.discountPercentage +
+          "% )"}
       </strong>
       <div className="inline-flex items-center mt-4 mb-2">
-        <SfRating size="xs" value={3} max={5} />
+        <SfRating size="xs" value={product.product.rating} max={5} />
         <SfCounter className="ml-1" size="xs">
-          123
+          {product.product.rating}
         </SfCounter>
         <SfLink
           href="#"

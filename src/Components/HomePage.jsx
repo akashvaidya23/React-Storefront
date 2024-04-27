@@ -62,20 +62,8 @@ const HomePage = () => {
               cartProducts={cartProducts}
             />
           );
-          // return <p key={product.id}>{product.title}</p>;
         })}
       </div>
-      {/* <div
-        style={{
-          display: "flex",
-          flexFlow: "row",
-          flexWrap: "wrap",
-          gap: "20px",
-          margin: "20px",
-        }}
-      >
-        <ProductCard />
-      </div> */}
     </>
   );
 };

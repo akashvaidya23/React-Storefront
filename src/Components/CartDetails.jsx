@@ -48,32 +48,39 @@ const CartDetails = () => {
         <h1
           style={{ textAlign: "center", fontWeight: "bold", fontSize: "30px" }}
         >
-          Your Cart Items {loading}
+          Your Cart Items
         </h1>
-        {loading && (
+        {cartItems.length > 0 && loading && (
           <p style={{ textAlign: "center", margin: "auto" }}>Please Wait ...</p>
         )}
         <br />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            gap: "40px",
-            justifyContent: "center",
-            alignItems: "center",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          {products.map((product) => (
-            <CartProducts
-              key={product.id}
-              product={product}
-              cartProducts={cartItems}
-            />
-          ))}
-        </div>
+        {cartItems.length > 0 ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: "40px",
+              justifyContent: "center",
+              alignItems: "center",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            {products.map((product) => (
+              <CartProducts
+                key={product.id}
+                product={product}
+                cartProducts={cartItems}
+              />
+            ))}
+          </div>
+        ) : (
+          <p style={{ textAlign: "center", margin: "auto" }}>
+            No Products added to cart
+          </p>
+        )}
+
         {!loading && (
           <div>
             <table

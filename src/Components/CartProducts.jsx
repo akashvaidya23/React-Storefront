@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
 
 export default function CartProducts(product) {
-  console.log(product);
+  // console.log(product);
   const inputId = useId();
   const min = 1;
   const max = 10;

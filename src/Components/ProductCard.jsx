@@ -20,6 +20,7 @@ import { useId, useState } from "react";
 import { clamp } from "@storefront-ui/shared";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
+import { Link } from "react-router-dom";
 
 export default function ProductCard(product) {
   // console.log(cartProducts);
@@ -70,13 +71,15 @@ export default function ProductCard(product) {
       )}
 
       <div>
-        <img
-          src={product.product.thumbnail}
-          alt="img"
-          width="300px"
-          height="150px"
-          style={{ height: "200px" }}
-        />
+        <Link to={`/products/${product.product.id}`}>
+          <img
+            src={product.product.thumbnail}
+            alt="img"
+            width="300px"
+            height="150px"
+            style={{ height: "200px" }}
+          />
+        </Link>
       </div>
       <h1 className="mb-1 font-bold typography-headline-4">
         {product.product.title}

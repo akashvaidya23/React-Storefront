@@ -8,6 +8,7 @@ import NavbarTop from "./Components/NavbarTop.jsx";
 import CartDetails from "./Components/CartDetails.jsx";
 import HomePage from "./Components/HomePage.jsx";
 import Finalize from "./Components/Finalize.jsx";
+import ViewProduct from "./Components/ViewProduct.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/finalize",
         element: <Finalize />,
+      },
+      {
+        path: "/products/:productId",
+        element: <ViewProduct />,
       },
     ],
   },

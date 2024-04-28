@@ -21,7 +21,7 @@ import { clamp } from "@storefront-ui/shared";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
 
-export default function ProductCart(product) {
+export default function ProductCard(product) {
   // console.log(cartProducts);
   const inputId = useId();
   const min = 0;
@@ -40,14 +40,11 @@ export default function ProductCart(product) {
   let index = cartItems.findIndex((cartItem) => {
     return cartItem.product == product.product.id;
   });
-  console.log("Product id", product.product.id, index);
   const [cartAdded, setCartAdded] = useState(index !== -1 ? true : false);
   const addToCart1 = (obj) => {
     setCartAdded(true);
     dispatch(addToCart(obj));
   };
-
-  // console.log(product.product.cartQuantity);
 
   const decrement = (obj) => {
     dec();
@@ -62,7 +59,7 @@ export default function ProductCart(product) {
     inc();
     dispatch(addToCart(obj));
   };
-  // console.log(cartAdded, product.product.cartQuantity);
+
   return (
     <section className="md:max-w-[640px]" style={{ padding: "5px" }}>
       {product.product.discountPercentage > 0 && (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import ProductCart from "./ProductCard";
+import ProductCard from "./ProductCard";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -10,7 +10,6 @@ const HomePage = () => {
     await fetch("https://dummyjson.com/products")
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data.products);
         setProducts(data.products);
         setLoading(false);
       });
@@ -21,7 +20,7 @@ const HomePage = () => {
   }, []);
 
   const cartProducts = useSelector((state) => state.cart.value);
-  console.log("cartProducts ", cartProducts);
+  // console.log("cartProducts ", cartProducts);
 
   products.map((product) => {
     if (cartProducts.length == 0) {
@@ -56,7 +55,7 @@ const HomePage = () => {
       >
         {products.map((product) => {
           return (
-            <ProductCart
+            <ProductCard
               key={product.id}
               product={product}
               cartProducts={cartProducts}

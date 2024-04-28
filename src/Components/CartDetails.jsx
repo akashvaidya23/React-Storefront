@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import ProductCart from "./ProductCard";
 import { SfButton } from "@storefront-ui/react";
 import { Link } from "react-router-dom";
+import CartProducts from "./CartProducts";
 
 const CartDetails = () => {
   const cartItems = useSelector((state) => state.cart.value);
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const processCartProducts = async () => {
@@ -15,6 +16,7 @@ const CartDetails = () => {
           `https://dummyjson.com/products/${item.product}`
         );
         const data = await response.json();
+        setLoading(false);
         return data;
       });
 
@@ -31,45 +33,76 @@ const CartDetails = () => {
       });
       setProducts(resolvedProducts);
     };
-
     processCartProducts();
   }, [cartItems]);
 
+  let totalQty = 0;
+  let totalAmount = 0;
+  products.map((product) => {
+    totalQty = totalQty + product.cartQuantity;
+    totalAmount = totalAmount + product.price * product.cartQuantity;
+  });
   return (
     <>
       <div style={{ margin: "10px" }}>
         <h1
           style={{ textAlign: "center", fontWeight: "bold", fontSize: "30px" }}
         >
-          Your Cart Items
+          Your Cart Items {loading}
         </h1>
+        {loading && (
+          <p style={{ textAlign: "center", margin: "auto" }}>Please Wait ...</p>
+        )}
         <br />
         <div
           style={{
             display: "flex",
             flexDirection: "row",
-            gap: "20px",
+            flexWrap: "wrap",
+            gap: "40px",
             justifyContent: "center",
+            alignItems: "center",
             marginLeft: "auto",
             marginRight: "auto",
           }}
         >
           {products.map((product) => (
-            <ProductCart
+            <CartProducts
               key={product.id}
               product={product}
               cartProducts={cartItems}
             />
           ))}
-          <br />
         </div>
-        <div style={{ textAlign: "center" }}>
-          <Link to="#" passHref legacyBehavior>
-            <SfButton size="lg" as="a">
-              Continue
-            </SfButton>
-          </Link>
-        </div>
+        {!loading && (
+          <div>
+            <table
+              style={{
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: "40px",
+              }}
+            >
+              <tr>
+                <th style={{ textAlign: "left" }}>Total Quantity :</th>
+                <td style={{ textAlign: "right" }}>{totalQty.toFixed(2)}</td>
+              </tr>
+              <tr>
+                <th style={{ textAlign: "left" }}>Total Price:</th>
+                <td style={{ textAlign: "right" }}>{totalAmount.toFixed(2)}</td>
+              </tr>
+            </table>
+          </div>
+        )}
+        {!loading && (
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
+            <Link to="/finalize" passHref legacyBehavior>
+              <SfButton size="lg" as="a">
+                Continue
+              </SfButton>
+            </Link>
+          </div>
+        )}
         <br />
       </div>
     </>

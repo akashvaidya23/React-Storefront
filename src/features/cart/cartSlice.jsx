@@ -9,8 +9,6 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      // console.log("state", state.value);
-      // console.log("in slice payload ", action.payload);
       let product_already = 0;
       let cart = [...state.value];
       let obj = action.payload;

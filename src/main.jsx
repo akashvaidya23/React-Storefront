@@ -7,6 +7,7 @@ import { store } from "./app/store.js";
 import NavbarTop from "./Components/NavbarTop.jsx";
 import CartDetails from "./Components/CartDetails.jsx";
 import HomePage from "./Components/HomePage.jsx";
+import Finalize from "./Components/Finalize.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "cart",
         element: <CartDetails />,
+      },
+      {
+        path: "/finalize",
+        element: <Finalize />,
       },
     ],
   },

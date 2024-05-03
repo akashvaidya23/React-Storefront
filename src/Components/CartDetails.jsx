@@ -8,7 +8,7 @@ const CartDetails = () => {
   const cartItems = useSelector((state) => state.cart.value);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  // console.log(cartItems);
   useEffect(() => {
     const processCartProducts = async () => {
       const productPromises = cartItems.map(async (item) => {
@@ -31,6 +31,18 @@ const CartDetails = () => {
           }
         }
       });
+
+      cartItems.map((cartItem) => {
+        console.log(cartItem.save_for_later);
+        resolvedProducts.forEach((res) => {
+          if (res.id == cartItem.product || cartItem.save_for_later == 1) {
+            res.save_for_later = 1;
+          } else {
+            res.save_for_later = 0;
+          }
+        });
+      });
+      console.log(resolvedProducts);
       setProducts(resolvedProducts);
     };
     processCartProducts();
@@ -67,13 +79,9 @@ const CartDetails = () => {
               marginRight: "auto",
             }}
           >
-            {products.map((product) => (
-              <CartProducts
-                key={product.id}
-                product={product}
-                cartProducts={cartItems}
-              />
-            ))}
+            {products.map((product) => {
+              return <CartProducts key={product.id} product={product} />;
+            })}
           </div>
         ) : (
           <p style={{ textAlign: "center", margin: "auto" }}>

@@ -5,12 +5,19 @@ import {
   SfIconAdd,
   SfIconSell,
   SfIconDelete,
+  SfIconShoppingCart,
 } from "@storefront-ui/react";
 import { useCounter } from "react-use";
 import { useId, ChangeEvent, useState } from "react";
 import { clamp } from "@storefront-ui/shared";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../features/cart/cartSlice";
+import {
+  addToCart,
+  addToSaveForLater,
+  removeFromCart,
+  removeFromSaveForLater,
+} from "../features/cart/cartSlice";
+import { Link } from "react-router-dom";
 
 export default function CartProducts(product) {
   // console.log(product);
@@ -42,17 +49,23 @@ export default function CartProducts(product) {
     inc();
     dispatch(addToCart(obj));
   };
+
+  const deleteFromCart = (obj) => {
+    dispatch(removeFromCart(obj));
+    // setCartAdded(false);
+    // set(min);
+  };
   return (
     <div className="relative flex border-b-[1px] border-neutral-200 hover:shadow-lg min-w-[320px] max-w-[640px] p-4">
       <div className="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
-        <SfLink href="#">
+        <Link to={`/products/${product.product.id}`}>
           <img
             className="w-full h-auto border rounded-md border-neutral-200"
             src={product.product.thumbnail}
             alt="alt"
             style={{ width: "200px", height: "100px" }}
           />
-        </SfLink>
+        </Link>
       </div>
       <div className="flex flex-col pl-4 min-w-[180px] flex-1">
         <SfLink
@@ -116,9 +129,23 @@ export default function CartProducts(product) {
               aria-label="Remove"
               type="button"
               className="text-neutral-500 text-xs font-light ml-auto flex items-center px-3 py-1.5"
+              onClick={() => {
+                deleteFromCart({
+                  product: product.product.id,
+                });
+              }}
             >
               <SfIconDelete />
               <span className="hidden ml-1.5 sm:block"> Remove </span>
+            </button>
+
+            <button
+              aria-label="Remove"
+              type="button"
+              className="text-neutral-500 text-xs font-light ml-auto flex items-center px-3 py-1.5"
+              onClick={() => {}}
+            >
+              <span className="hidden ml-1.5 sm:block"> Save for Later </span>
             </button>
           </div>
         </div>

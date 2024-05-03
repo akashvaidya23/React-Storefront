@@ -1,7 +1,7 @@
 import { SfButton } from "@storefront-ui/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, json } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Finalize = () => {
   const cartItems = useSelector((state) => state.cart.value);
@@ -9,14 +9,18 @@ const Finalize = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const processCartProducts = async () => {
-      const productPromises = cartItems.map(async (item) => {
-        const response = await fetch(
-          `https://dummyjson.com/products/${item.product}`
-        );
-        const data = await response.json();
-        setLoading(false);
-        return data;
-      });
+      const productPromises = cartItems
+        .filter((cart) => {
+          return cart.save_for_later != 1;
+        })
+        .map(async (item) => {
+          const response = await fetch(
+            `https://dummyjson.com/products/${item.product}`
+          );
+          const data = await response.json();
+          setLoading(false);
+          return data;
+        });
 
       const resolvedProducts = await Promise.all(productPromises);
       resolvedProducts.map((resolvedProduct) => {
@@ -33,19 +37,19 @@ const Finalize = () => {
     };
     processCartProducts();
   }, [cartItems]);
-  console.log("products", products);
+  // console.log("products", products);
   let totalQty = 0;
   let totalAmount = 0;
   products.map((product) => {
     totalQty = totalQty + product.cartQuantity;
     totalAmount = totalAmount + product.price * product.cartQuantity;
   });
-  //   localStorage.setItem("cartItems", JSON.stringify([]));
   return (
     <>
       <h1 style={{ textAlign: "center", fontWeight: "bold", fontSize: "30px" }}>
         Summary of your Order
       </h1>
+      {loading && <p>Loading ...</p>}
       <table
         style={{
           width: "70%",

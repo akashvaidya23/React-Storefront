@@ -30,11 +30,37 @@ export const cartSlice = createSlice({
       }
       //   state.value.push(action.payload);
       // console.log("state ", state.value);
-      localStorage.setItem("cartItems", JSON.stringify(state.value));
+      localStorage.setItem("cartItems", JSON.stringify(cart));
     },
+
+    removeFromCart: (state, action) => {
+      let cart = [...state.value];
+      let obj = action.payload;
+      const index = cart.findIndex((car) => car.product === obj.product);
+      console.log("in slice delete ", obj, index);
+      state.value.splice(index, 1);
+      localStorage.setItem("cartItems", JSON.stringify(cart));
+    },
+
+    // addToSaveForLater: (state, action) => {
+    //   let cart = [...state.value];
+    //   let obj = action.payload;
+    //   console.log("in slice save later ", obj);
+    //   cart.map((carts) => {
+    //     if (carts.product == obj.product) {
+    //       carts.save_for_later = 1;
+    //     }
+    //   });
+    //   localStorage.setItem("cartItems", JSON.stringify(cart));
+    // },
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  addToSaveForLater,
+  removeFromSaveForLater,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

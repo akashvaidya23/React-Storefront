@@ -1,7 +1,8 @@
 import { SfButton } from "@storefront-ui/react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, redirect, useNavigate } from "react-router-dom";
+import { emptyCart } from "../features/cart/cartSlice";
 
 const Finalize = () => {
   const cartItems = useSelector((state) => state.cart.value);
@@ -44,6 +45,13 @@ const Finalize = () => {
     totalQty = totalQty + product.cartQuantity;
     totalAmount = totalAmount + product.price * product.cartQuantity;
   });
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const gotoInvoice = () => {
+    navigate("/invoice", { state: products });
+    dispatch(emptyCart());
+  };
   return (
     <>
       <h1 style={{ textAlign: "center", fontWeight: "bold", fontSize: "30px" }}>
@@ -136,11 +144,14 @@ const Finalize = () => {
         </tfoot>
       </table>
       <div style={{ textAlign: "center", marginTop: "20px" }}>
-        <Link to="#" passHref legacyBehavior>
-          <SfButton size="lg" as="a">
-            Go To Payment Option
-          </SfButton>
-        </Link>
+        <SfButton
+          size="lg"
+          as="a"
+          onClick={gotoInvoice}
+          style={{ cursor: "pointer" }}
+        >
+          Go To Payment Option
+        </SfButton>
       </div>
     </>
   );

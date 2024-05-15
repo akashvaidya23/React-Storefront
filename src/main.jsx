@@ -9,6 +9,7 @@ import CartDetails from "./Components/CartDetails.jsx";
 import HomePage from "./Components/HomePage.jsx";
 import Finalize from "./Components/Finalize.jsx";
 import ViewProduct from "./Components/ViewProduct.jsx";
+import Invoice from "./Components/Invoice.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/products/:productId",
         element: <ViewProduct />,
+      },
+      {
+        path: "/invoice",
+        element: <Invoice />,
       },
     ],
   },

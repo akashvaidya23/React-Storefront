@@ -128,7 +128,7 @@ const Finalize = () => {
                 padding: "5px",
               }}
             >
-              {totalQty}
+              {totalQty.toFixed(2)}
             </th>
             <th style={{ border: "1px solid black" }}></th>
             <th

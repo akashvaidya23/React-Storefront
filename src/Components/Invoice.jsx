@@ -15,6 +15,9 @@ const Invoice = () => {
 
   return (
     <>
+      <h1 style={{ textAlign: "center", fontWeight: "bold", fontSize: "20px" }}>
+        Order has been placed successfully
+      </h1>
       <h1 style={{ textAlign: "center", fontWeight: "bold", fontSize: "30px" }}>
         Your Invoice
       </h1>
@@ -74,7 +77,7 @@ const Invoice = () => {
                 padding: "5px",
               }}
             >
-              {totalQty}
+              {totalQty.toFixed(2)}
             </th>
             <th style={{ border: "1px solid black" }}></th>
             <th

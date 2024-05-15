@@ -33,7 +33,7 @@ const CartDetails = () => {
       });
 
       cartItems.map((cartItem) => {
-        console.log(cartItem.save_for_later);
+        // console.log(cartItem.save_for_later);
         resolvedProducts.forEach((res) => {
           if (res.id == cartItem.product || cartItem.save_for_later == 1) {
             res.save_for_later = 1;

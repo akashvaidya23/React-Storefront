@@ -112,10 +112,6 @@ export default function ProductCard(props) {
         </SfLink>
       </div>
       <div className="py-4 mb-4 border-gray-200 border-y">
-        <div className="bg-primary-100 text-primary-700 flex justify-center gap-1.5 py-1.5 typography-text-sm items-center mb-4 rounded-md">
-          <SfIconShoppingCartCheckout />
-          {product.cartQuantity} in cart
-        </div>
         <div className="items-start xs:flex">
           <div className="flex flex-col items-stretch xs:items-center xs:inline-flex">
             {cartAdded || product.cartQuantity > 0 ? (

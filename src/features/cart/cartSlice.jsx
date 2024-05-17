@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const storedCartItems = localStorage.getItem("cartItems");
 const initialState = {
   value: storedCartItems ? JSON.parse(storedCartItems) : [],
+  searchTerm: "",
 };
 
 export const cartSlice = createSlice({
@@ -58,6 +59,11 @@ export const cartSlice = createSlice({
       state.value = [];
       localStorage.setItem("cartItems", []);
     },
+
+    searchProduct: (state, action) => {
+      state.searchTerm = action.payload;
+      console.log("search term ", state.searchTerm);
+    },
   },
 });
 
@@ -67,6 +73,7 @@ export const {
   addToSaveForLater,
   removeFromSaveForLater,
   emptyCart,
+  searchProduct,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -6,18 +6,29 @@ import ProductCard from "./ProductCard";
 const HomePage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const searchTerm = useSelector((state) => state.cart.searchTerm);
+
   const getProducts = async () => {
     await fetch("https://dummyjson.com/products")
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data.products);
+        if (searchTerm) {
+          let filteredProducts = data.products.filter((product) => {
+            return product.title
+              .toUpperCase()
+              .includes(searchTerm.toUpperCase());
+          });
+          setProducts(filteredProducts);
+        } else {
+          setProducts(data.products);
+        }
         setLoading(false);
       });
   };
   useEffect(() => {
     getProducts();
     // console.log("inside array");
-  }, []);
+  }, [searchTerm]);
 
   const cartProducts = useSelector((state) => state.cart.value);
   // console.log("cartProducts ", cartProducts);

@@ -26,8 +26,9 @@ import {
   createRef,
   RefObject,
 } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
+import { searchProduct } from "../features/cart/cartSlice";
 
 const actionItems = [
   {
@@ -425,9 +426,24 @@ export default function NavbarTop() {
     }
   };
 
-  const search = (event) => {
-    event.preventDefault();
-    alert(`Successfully found 10 results for ${inputValue}`);
+  // const search = (event) => {
+  //   event.preventDefault();
+  //   alert(`Successfully found 10 results for ${inputValue}`);
+  // };
+
+  const dispatch = useDispatch();
+  const getProduct = (term) => {
+    setInputValue(term);
+    dispatch(searchProduct(term));
+    // fetch(`https://dummyjson.com/products`)
+    //   .then((data) => data.json())
+    //   .then((result) => {
+    //     console.log(
+    //       result.products.filter((product) => {
+    //         return product.title.toUpperCase().includes(term.toUpperCase());
+    //       })
+    //     );
+    //   });
   };
 
   return (
@@ -463,34 +479,34 @@ export default function NavbarTop() {
               </picture>
             </Link>
           </div>
-          <form
+          {/* <form
             role="search"
             className="hidden md:flex flex-[100%] ml-10"
-            onSubmit={search}
-          >
-            <SfInput
-              value={inputValue}
-              type="search"
-              className="[&::-webkit-search-cancel-button]:appearance-none"
-              placeholder="Search"
-              wrapperClassName="flex-1 h-10 pr-0"
-              size="base"
-              slotSuffix={
-                <span className="flex items-center">
-                  <SfButton
-                    variant="tertiary"
-                    square
-                    aria-label="search"
-                    type="submit"
-                    className="rounded-l-none hover:bg-transparent active:bg-transparent"
-                  >
-                    <SfIconSearch />
-                  </SfButton>
-                </span>
-              }
-              onChange={(event) => setInputValue(event.target.value)}
-            />
-          </form>
+            // onSubmit={search}
+          > */}
+          <SfInput
+            value={inputValue}
+            type="search"
+            className="[&::-webkit-search-cancel-button]:appearance-none"
+            placeholder="Search"
+            wrapperClassName="flex-1 h-10 pr-0"
+            size="base"
+            slotSuffix={
+              <span className="flex items-center">
+                <SfButton
+                  variant="tertiary"
+                  square
+                  aria-label="search"
+                  type="submit"
+                  className="rounded-l-none hover:bg-transparent active:bg-transparent"
+                >
+                  <SfIconSearch />
+                </SfButton>
+              </span>
+            }
+            onChange={(event) => getProduct(event.target.value)}
+          />
+          {/* </form> */}
           <nav className="flex flex-nowrap justify-end items-center md:ml-10 gap-x-1">
             <Link to="/cart">
               <SfButton
@@ -518,34 +534,34 @@ export default function NavbarTop() {
               </SfButton>
             ))}
           </nav>
-          <form
+          {/* <form
             role="search"
             className="flex md:hidden flex-[100%] my-2"
-            onSubmit={search}
-          >
-            <SfInput
-              value={inputValue}
-              type="search"
-              className="[&::-webkit-search-cancel-button]:appearance-none"
-              placeholder="Search"
-              wrapperClassName="flex-1 h-10 pr-0"
-              size="base"
-              slotSuffix={
-                <span className="flex items-center">
-                  <SfButton
-                    variant="tertiary"
-                    square
-                    aria-label="search"
-                    type="submit"
-                    className="rounded-l-none hover:bg-transparent active:bg-transparent"
-                  >
-                    <SfIconSearch />
-                  </SfButton>
-                </span>
-              }
-              onChange={(event) => setInputValue(event.target.value)}
-            />
-          </form>
+            // onSubmit={search}
+          > */}
+          {/* <SfInput
+            value={inputValue}
+            type="search"
+            className="[&::-webkit-search-cancel-button]:appearance-none"
+            placeholder="Search"
+            wrapperClassName="flex-1 h-10 pr-0"
+            size="base"
+            slotSuffix={
+              <span className="flex items-center">
+                <SfButton
+                  variant="tertiary"
+                  square
+                  aria-label="search"
+                  type="submit"
+                  className="rounded-l-none hover:bg-transparent active:bg-transparent"
+                >
+                  <SfIconSearch />
+                </SfButton>
+              </span>
+            }
+            onChange={(event) => setInputValue(event.target.value)}
+          />
+          </form> */}
         </div>
         {/* Desktop dropdown */}
         <nav ref={refs.setFloating}>
